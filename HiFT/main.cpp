@@ -76,7 +76,19 @@ samplesCommon::TrtParams initializeSampleParams(const samplesCommon::Args& args)
 
     // Name Input Output Track
     params.inputTensorNamesTrack = {"input.0","input.1","input.2","input.3"};
-    params.outputTensorNamesTrack = {"output.1","output.2","output.3"};
+    params.outputTensorNamesTrack = {"cls1", "cls2", "loc"};
+
+//    params.TrtFileTemplate = "../../model/model_template.trt";
+//    params.TrtFileTrack = "../../model/model_search.trt";
+
+//    // Name Input Output Template
+//    // Check model ONNX
+//    params.inputTensorNamesTemplate = {"input.0"};
+//    params.outputTensorNamesTemplate = {"output.1","output.2","output.3"};
+
+//    // Name Input Output Track
+//    params.inputTensorNamesTrack = {"input.0","input.1","input.2","input.3"};
+//    params.outputTensorNamesTrack = {"output.1","output.2","output.3"};
 
     return params;
 }

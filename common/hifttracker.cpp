@@ -94,7 +94,7 @@ std::vector<Anchor> HiFTTracker::generate_anchor(float* output_loc_){
 //    std::string file_output_txt = "/home/vee/thangkv/linhnq11/Tracking/HiFT/logs/output_loc.txt";
 //    std::ofstream myfile;
 //    myfile.open(file_output_txt);
-//    for (int i = 0 ; i < 4*11*11 ; ++i){
+//    for (int i = 0 ; i < 4*cfg_.output_size*cfg_.output_size ; ++i){
 //        myfile << std::to_string(output_loc_[i]) + "\n";
 //        std::cout << "output_loc_ : " << output_loc_[i] << std::endl;
 //    }
@@ -122,21 +122,22 @@ std::vector<Anchor> HiFTTracker::generate_anchor(float* output_loc_){
 
     std::vector<float> w(size * size);
     std::vector<float> h(size * size);
-    std::vector<std::vector<std::vector<float>>> shap(4, std::vector<std::vector<float>>(11, std::vector<float>(11)));
+    std::vector<std::vector<std::vector<float>>> shap(4, std::vector<std::vector<float>>(cfg_.output_size, std::vector<float>(cfg_.output_size)));
 
 //    for (int i = 0; i < 400; i++){
 //        std::cout << "x : " << output_loc_[i] << std::endl;
 //    }
 
     for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 11; j++) {
-            for (int k = 0; k < 11; k++) {
-                if (output_loc_[i*121 + j*11 + k] <= -1)
-                    output_loc_[i*121 + j*11 + k] = -0.99;
-                else if (output_loc_[i*121 + j*11 + k] >= 1)
-                    output_loc_[i*121 + j*11 + k] = 0.99;
-//                std::cout << "i*11*11 + j*11 + k : " << [i*11*11 + j*11 + k] << std::endl;
-                float shap_ = (log(output_loc_[i*121 + j*11 + k] +1) - log(1-output_loc_[i*121 + j*11 + k])) / 2;
+        for (int j = 0; j < cfg_.output_size; j++) {
+            for (int k = 0; k < cfg_.output_size; k++) {
+                int index = i*pow(cfg_.output_size,2) + j*cfg_.output_size + k;
+                if (output_loc_[index] <= -1)
+                    output_loc_[index] = -0.99;
+                else if (output_loc_[index] >= 1)
+                    output_loc_[index] = 0.99;
+//                std::cout << "i*cfg_.output_size*cfg_.output_size + j*cfg_.output_size + k : " << [i*cfg_.output_size*cfg_.output_size + j*cfg_.output_size + k] << std::endl;
+                float shap_ = (log(output_loc_[index] +1) - log(1-output_loc_[index])) / 2;
                 shap[i][j][k] = shap_ * 143;
 //                std::cout << "shap_ : " << shap_ <<std::endl;
             }

@@ -24,7 +24,7 @@ struct Anchor {
 
 struct Parameter {
     int exemplar_sz = 127;
-    int instance_sz = 287;
+    int instance_sz = 255;
 //    int base_size = 8;
 //    int total_stride = 8;
     int anchor_stride = 16;
@@ -38,7 +38,7 @@ struct Parameter {
     float lr = 0.30;
     float track_w2 = 1.0;
     float track_w1 = 1.0;
-    int output_size = 11;
+    int output_size = 9;
 };
 
 template <typename t>
